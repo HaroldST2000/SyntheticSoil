@@ -44,7 +44,7 @@ public class ColorEncoding {
     }
 
     public static Color EncodeLayerAsColor(int layer, bool grayscale) {
-        Debug.Log("Salut tout");
+        
         if (grayscale) {
             return new Color(layer / 255.0f, layer / 255.0f, layer / 255.0f);
         }

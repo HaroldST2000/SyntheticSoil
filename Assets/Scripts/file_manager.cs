@@ -33,6 +33,7 @@ public class file_manager : MonoBehaviour
             path = fileExplorer.fileName;
             popupPanel.SetActive(false);
     }
+    
     string GetFile(){
         if(path != null){
                textFromFile= System.IO.File.ReadAllText(path);

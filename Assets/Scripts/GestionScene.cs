@@ -9,9 +9,7 @@ public class GestionScene : MonoBehaviour
 
     public ImageSynthesis synthBottom;
 
-    public Camera MainCamera, BottomCamera;
-
-    public GameObject CsvReader;
+    public Camera MainCamera, BottomCamera, visionneuse;
 
     public int[] SpawnNumber = new int[11];
 
@@ -35,6 +33,10 @@ public class GestionScene : MonoBehaviour
 
     public int palier = 500;
 
+    public CsvReader csvReader;
+
+    public Arata arata;
+
     public float[]
         SizeSieves =
             new float[12]
@@ -55,15 +57,15 @@ public class GestionScene : MonoBehaviour
 
     IEnumerator coroutine()
     {   
-        int compteur =  GameObject.Find("Cube").GetComponent<CsvReader>().iteration;
+        int compteur =  csvReader.iteration;
 
         for(int z = 1; z <= compteur ; z++){
 
-        GameObject.Find("Cube").GetComponent<CsvReader>().generateur = true;
-        yield return new WaitForSeconds(2);
+        csvReader.generateur = true;
+        yield return new WaitForSeconds(5);
 
-        SpawnNumber = CsvReader.GetComponent<CsvReader>().SpawnNumber;
-        SpawnNumberMR = CsvReader.GetComponent<CsvReader>().SpawnNumberMR;
+        SpawnNumber = csvReader.SpawnNumber;
+        SpawnNumberMR = csvReader.SpawnNumberMR;
 
         for (int i = 0; i <= 10; i++)
         {
@@ -458,11 +460,12 @@ Debug.Log("je genere les : " + restdivMR + " particules restantes");
         }
         synth.OnSceneChange(false);
          nombre++ ;
-         GameObject.Find("Cube").GetComponent<CsvReader>().j = nombre;
-         GameObject.Find("Cube").GetComponent<CsvReader>().TrueWeigthTotal = 0.0f;
-         GameObject.Find("Cube").GetComponent<CsvReader>().TrueWeigthTotalMR = 0.0f;
-         GameObject.Find("Cube").GetComponent<CsvReader>().TrueTotalWeigthfinal = 0.0f;
+         csvReader.j = nombre;
+         csvReader.TrueWeigthTotal = 0.0f;
+         csvReader.TrueWeigthTotalMR = 0.0f;
+         csvReader.TrueTotalWeigthfinal = 0.0f;
          yield return new WaitForSeconds(10);
+        
          synth.Save("Images_Up_"+(nombre), 3840, 2160, "ImagesSynthetiques", 1);
          synth.Save("Images_Up_"+(nombre), 3840, 2160, "ImagesSynthetiques", 3);
          synthBottom.Save("Images_Down_"+(nombre), 3840, 2160, "ImagesSynthetiquesbottom", 1);
@@ -470,8 +473,7 @@ Debug.Log("je genere les : " + restdivMR + " particules restantes");
        // SaveCameraView(MainCamera,"Images_Up_"+(nombre),"ImagesSynthetiques");
        // SaveCameraView(BottomCamera,"Images_Down_"+(nombre),"ImagesSynthetiquesbottom");
          yield return new WaitForSeconds(5);
-         GameObject.Find("Spawner").GetComponent<Arata>().arata();
-
+         arata.arata();
       }
 
      SceneManager.LoadScene("interface");
